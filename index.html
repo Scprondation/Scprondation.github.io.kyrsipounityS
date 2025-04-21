@@ -1,0 +1,3392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Developer Curriculum</title>
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --bg-day: #252525;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent: #6a5acd;
+            --accent-hover: #7b68ee;
+            --success: #4caf50;
+            --warning: #ff9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .weeks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .week-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .week-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .day-card {
+            background: var(--bg-day);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .practice-day {
+            background: rgba(106, 90, 205, 0.1);
+            border-left: 4px solid var(--accent);
+        }
+
+        .topic-item {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .topic-content {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        .practice-task {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .weeks-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Unity Developer Curriculum</h1>
+        <p>8-недельный курс по разработке игр на Unity</p>
+    </header>
+
+    <div class="container">
+        <div class="weeks-container" id="weeksContainer">
+            <!-- Weeks will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const curriculum = [
+            {
+                title: "Неделя 1: Основы C#",
+                days: [
+                    {
+                        title: "День 1: Переменные и типы данных",
+                        topics: [
+                            {
+                                title: "Основные типы данных",
+                                content: `
+                                    <h4>1. Целочисленные:</h4>
+                                    <ul>
+                                        <li><code>byte</code> (0-255): <code>byte enemyCount = 10;</code></li>
+                                        <li><code>int</code> (-2.1 млрд до 2.1 млрд): <code>int playerScore = 1500;</code></li>
+                                        <li><code>long</code> (очень большие числа): <code>long worldSeed = 123456789L;</code></li>
+                                    </ul>
+                                    
+                                    <h4>2. Дробные:</h4>
+                                    <ul>
+                                        <li><code>float</code> (7 цифр, суффикс <em>f</em>): <code>float movementSpeed = 5.5f;</code></li>
+                                        <li><code>double</code> (15-16 цифр): <code>double physicsPrecision = 1.23456789;</code></li>
+                                    </ul>
+                                    
+                                    <h4>3. Логические и символьные:</h4>
+                                    <pre><code>bool isGameActive = true;
+        char playerClass = 'A'; // Один символ в одинарных кавычках</code></pre>
+                                `
+                            },
+                            {
+                                title: "Объявление и инициализация",
+                                content: `
+                                    <h4>Синтаксис:</h4>
+                                    <pre><code>тип имя_переменной = значение;</code></pre>
+                                    
+                                    <h4>Примеры:</h4>
+                                    <pre><code>// Явная инициализация
+        int health = 100;
+        string playerName = "Артур";
+
+        // Несколько переменных
+        float x = 1.5f, y = 3.2f, z = 0f;
+
+        // Константы (неизменяемые)
+        const float GRAVITY = 9.8f;</code></pre>
+                                    
+                                    <h4>Особенности:</h4>
+                                    <ul>
+                                        <li>Имена чувствительны к регистру: <code>score</code> ≠ <code>Score</code></li>
+                                        <li>Нельзя использовать ключевые слова: <code>int class = 5; // Ошибка!</code></li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 2: Операторы и ввод/вывод",
+                        topics: [
+                            {
+                                title: "Арифметические операторы",
+                                content: `
+                                    <table class="operator-table">
+                                        <tr><th>Оператор</th><th>Пример</th><th>Результат</th></tr>
+                                        <tr><td>+</td><td><code>5 + 3</code></td><td>8</td></tr>
+                                        <tr><td>-</td><td><code>10 - 4</code></td><td>6</td></tr>
+                                        <tr><td>*</td><td><code>2 * 3</code></td><td>6</td></tr>
+                                        <tr><td>/</td><td><code>10 / 3</code></td><td>3 (для целых)</td></tr>
+                                        <tr><td>%</td><td><code>10 % 3</code></td><td>1 (остаток)</td></tr>
+                                    </table>
+                                    
+                                    <h4>Пример в игре:</h4>
+                                    <pre><code>int totalDamage = baseDamage + (weaponBonus * criticalMultiplier);
+        int remainingHealth = maxHealth - damageTaken;</code></pre>
+                                `
+                            },
+                            {
+                                title: "Ввод/вывод в консоли",
+                                content: `
+                                    <h4>Методы вывода:</h4>
+                                    <pre><code>Console.Write("Здоровье: " + health); // Без перевода строки
+        Console.WriteLine($"Урон: {damage}"); // С новой строки (интерполяция)</code></pre>
+                                    
+                                    <h4>Чтение ввода:</h4>
+                                    <pre><code>Console.Write("Введите имя: ");
+        string name = Console.ReadLine();
+
+        Console.Write("Введите уровень: ");
+        int level = Convert.ToInt32(Console.ReadLine());</code></pre>
+                                    
+                                    <h4>Практический пример:</h4>
+                                    <pre><code>Console.WriteLine("=== Калькулятор урона ===");
+        Console.Write("Базовый урон: ");
+        int baseDmg = int.Parse(Console.ReadLine());
+        Console.Write("Критический множитель: ");
+        float crit = float.Parse(Console.ReadLine());
+        Console.WriteLine($"Итоговый урон: {baseDmg * crit}");</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 3: Условные операторы",
+                        topics: [
+                            {
+                                title: "if/else",
+                                content: `
+                                    <h4>Базовый синтаксис:</h4>
+                                    <pre><code>if (условие) {
+            // Код при true
+        } else {
+            // Код при false
+        }</code></pre>
+                                    
+                                    <h4>Пример в игре:</h4>
+                                    <pre><code>if (playerHealth <= 0) {
+            Console.WriteLine("Игрок погиб!");
+            GameOver();
+        } else if (playerHealth < 20) {
+            Console.WriteLine("Критическое здоровье!");
+        } else {
+            Console.WriteLine("Игрок жив.");
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "switch-case",
+                                content: `
+                                    <h4>Для множественных условий:</h4>
+                                    <pre><code>switch (playerClass) {
+            case "Warrior":
+                damage = strength * 2;
+                break;
+            case "Mage":
+                damage = intelligence * 3;
+                break;
+            default:
+                damage = 10;
+                break;
+        }</code></pre>
+                                    
+                                    <h4>Практическое применение:</h4>
+                                    <pre><code>Console.Write("Выберите оружие (1-меч, 2-лук, 3-посох): ");
+        int choice = int.Parse(Console.ReadLine());
+
+        switch (choice) {
+            case 1: weaponDamage = 15; break;
+            case 2: weaponDamage = 12; break;
+            case 3: weaponDamage = 20; break;
+            default: Console.WriteLine("Неверный выбор!"); return;
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 4: Циклы",
+                        topics: [
+                            {
+                                title: "for и while",
+                                content: `
+                                    <h4>Цикл for:</h4>
+                                    <pre><code>for (инициализация; условие; итерация) {
+            // Тело цикла
+        }</code></pre>
+                                    <p>Пример:</p>
+                                    <pre><code>// Создание 10 врагов
+        for (int i = 0; i < 10; i++) {
+            SpawnEnemy();
+        }</code></pre>
+                                    
+                                    <h4>Цикл while:</h4>
+                                    <pre><code>while (условие) {
+            // Тело цикла
+        }</code></pre>
+                                    <p>Пример:</p>
+                                    <pre><code>// Главный игровой цикл
+        while (isGameRunning) {
+            UpdateGame();
+            RenderGraphics();
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "break и continue",
+                                content: `
+                                    <h4>Операторы управления:</h4>
+                                    <ul>
+                                        <li><code>break</code> - немедленный выход из цикла</li>
+                                        <li><code>continue</code> - переход к следующей итерации</li>
+                                    </ul>
+                                    
+                                    <h4>Пример:</h4>
+                                    <pre><code>// Поиск первого живого врага
+        foreach (var enemy in enemies) {
+            if (enemy.IsDead) continue;
+            
+            Console.WriteLine($"Атакую {enemy.Name}!");
+            break; // Атакуем только одного
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 5: Массивы и списки",
+                        topics: [
+                            {
+                                title: "Массивы",
+                                content: `
+                                    <h4>Создание массива:</h4>
+                                    <pre><code>// Фиксированный размер
+        int[] scores = new int[5]; 
+        string[] enemyTypes = {"Орк", "Гоблин", "Тролль"};</code></pre>
+                                    
+                                    <h4>Доступ к элементам:</h4>
+                                    <pre><code>enemyTypes[0] = "Дракон"; // Изменение первого элемента
+        Console.WriteLine(enemyTypes[1]); // Вывод "Гоблин"</code></pre>
+                                `
+                            },
+                            {
+                                title: "Списки (List<T>)",
+                                content: `
+                                    <h4>Гибкие коллекции:</h4>
+                                    <pre><code>List&lt;string&gt; inventory = new List&lt;string&gt;();
+
+        // Добавление элементов
+        inventory.Add("Меч");
+        inventory.Add("Зелье здоровья");
+
+        // Удаление
+        inventory.Remove("Меч");
+
+        // Доступ
+        Console.WriteLine(inventory[0]);</code></pre>
+                                    
+                                    <h4>Практический пример:</h4>
+                                    <pre><code>List&lt;int&gt; highScores = new List&lt;int&gt;();
+        while (highScores.Count < 10) {
+            highScores.Add(GenerateScore());
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 6: Методы",
+                        topics: [
+                            {
+                                title: "Создание методов",
+                                content: `
+                                    <h4>Синтаксис:</h4>
+                                    <pre><code>возвращаемый_тип ИмяМетода(параметры) {
+            // Тело метода
+            return результат; // Если не void
+        }</code></pre>
+                                    
+                                    <h4>Примеры:</h4>
+                                    <pre><code>// Метод без возвращаемого значения
+        void ShowHealth() {
+            Console.WriteLine($"Здоровье: {health}");
+        }
+
+        // Метод с параметрами и возвратом
+        int CalculateDamage(int baseDmg, float multiplier) {
+            return (int)(baseDmg * multiplier);
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Перегрузка методов",
+                                content: `
+                                    <h4>Методы с одним именем:</h4>
+                                    <pre><code>void Attack() {
+            Attack(10); // Вызов другой версии
+        }
+
+        void Attack(int damage) {
+            enemy.Health -= damage;
+        }
+
+        void Attack(int damage, float stunDuration) {
+            Attack(damage);
+            enemy.Stun(stunDuration);
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 7: Практика - Консольная RPG",
+                        isPractice: true,
+                        task: `
+                            <h3>Создайте прототип игры:</h3>
+                            <ol>
+                                <li>Класс <code>Player</code> с полями: <code>Name</code>, <code>Health</code>, <code>Damage</code></li>
+                                <li>Массив врагов (<code>Enemy[]</code>)</li>
+                                <li>Цикл боя (игрок выбирает действие: атака/лечение)</li>
+                                <li>Систему уровней (при победе +1 уровень)</li>
+                            </ol>
+                            
+                            <div class="solution" style="display:none">
+                                <h4>Подсказки:</h4>
+                                <pre><code>class Player {
+            public string Name;
+            public int Health;
+            public int Damage;
+            public int Level = 1;
+            
+            public void Attack(Enemy target) {
+                target.Health -= this.Damage;
+            }
+            
+            public void Heal() {
+                Health += 20 * Level;
+            }
+        }</code></pre>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "Неделя 2: ООП в C# и Unity Basics",
+                days: [
+                    {
+                        title: "День 7: Классы и объекты",
+                        topics: [
+                            {
+                                title: "Создание классов",
+                                content: `
+                                    <h4>Базовый синтаксис:</h4>
+                                    <pre><code>class Player {
+            // Поля (данные)
+            public string Name;
+            public int Health = 100;
+            
+            // Метод (поведение)
+            public void TakeDamage(int damage) {
+                Health -= damage;
+            }
+        }</code></pre>
+                                    
+                                    <h4>Термины:</h4>
+                                    <ul>
+                                        <li><strong>Инкапсуляция</strong> - объединение данных и методов в одном классе</li>
+                                        <li><strong>Экземпляр класса</strong> - конкретный объект (например: <code>Player warrior = new Player();</code>)</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Конструкторы",
+                                content: `
+                                    <h4>Специальный метод для инициализации:</h4>
+                                    <pre><code>class Enemy {
+            public string Type;
+            public int Damage;
+            
+            // Конструктор
+            public Enemy(string type, int damage) {
+                Type = type;
+                Damage = damage;
+            }
+        }
+
+        // Создание объекта
+        Enemy orc = new Enemy("Орк", 15);</code></pre>
+                                    
+                                    <h4>Практический пример:</h4>
+                                    <pre><code>class Weapon {
+            public string Name;
+            public int Damage;
+            
+            public Weapon(string name, int damage) {
+                Name = name;
+                Damage = damage;
+            }
+        }
+
+        Weapon sword = new Weapon("Меч дракона", 25);</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 8: Наследование",
+                        topics: [
+                            {
+                                title: "Базовый и дочерний классы",
+                                content: `
+                                    <h4>Синтаксис наследования:</h4>
+                                    <pre><code>class Character {
+            public int Health;
+            public void Move() { /* ... */ }
+        }
+
+        class Player : Character {
+            public int Score;
+            public void Attack() { /* ... */ }
+        }</code></pre>
+                                    
+                                    <h4>Термины:</h4>
+                                    <ul>
+                                        <li><strong>Родительский класс (базовый)</strong> - Character</li>
+                                        <li><strong>Дочерний класс (производный)</strong> - Player</li>
+                                        <li><strong>"Является" (is-a)</strong> - Player <em>является</em> Character</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Ключевое слово base",
+                                content: `
+                                    <h4>Вызов родительского конструктора:</h4>
+                                    <pre><code>class NPC : Character {
+            public string Dialog;
+            
+            public NPC(int health, string dialog) : base(health) {
+                Dialog = dialog;
+            }
+        }</code></pre>
+                                    
+                                    <h4>Пример в Unity:</h4>
+                                    <pre><code>public class Enemy : MonoBehaviour {
+            protected int health;
+            
+            public Enemy(int health) {
+                this.health = health;
+            }
+        }
+
+        public class Orc : Enemy {
+            public Orc() : base(100) {
+                // Дополнительная инициализация
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 9: Полиморфизм",
+                        topics: [
+                            {
+                                title: "Виртуальные методы",
+                                content: `
+                                    <h4>Переопределение поведения:</h4>
+                                    <pre><code>class Character {
+            public virtual void Attack() {
+                Console.WriteLine("Базовая атака");
+            }
+        }
+
+        class Mage : Character {
+            public override void Attack() {
+                Console.WriteLine("Магическая атака");
+            }
+        }</code></pre>
+                                    
+                                    <h4>Термины:</h4>
+                                    <ul>
+                                        <li><strong>Полиморфизм</strong> - возможность объектов использовать методы производных классов</li>
+                                        <li><strong>override</strong> - переопределение метода</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Абстрактные классы",
+                                content: `
+                                    <h4>Классы-шаблоны:</h4>
+                                    <pre><code>abstract class Weapon {
+            public abstract void Attack();
+            
+            public void Reload() {
+                Console.WriteLine("Перезарядка...");
+            }
+        }
+
+        class Sword : Weapon {
+            public override void Attack() {
+                Console.WriteLine("Удар мечом!");
+            }
+        }</code></pre>
+                                    
+                                    <h4>Особенности:</h4>
+                                    <ul>
+                                        <li>Нельзя создать экземпляр абстрактного класса</li>
+                                        <li>Должен содержать хотя бы один абстрактный метод</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 10: Интерфейсы",
+                        topics: [
+                            {
+                                title: "Создание интерфейсов",
+                                content: `
+                                    <h4>Синтаксис интерфейса:</h4>
+                                    <pre><code>interface IDamageable {
+            void TakeDamage(int damage);
+            int Health { get; }
+        }
+
+        class Player : IDamageable {
+            public int Health { get; private set; }
+            
+            public void TakeDamage(int damage) {
+                Health -= damage;
+            }
+        }</code></pre>
+                                    
+                                    <h4>Термины:</h4>
+                                    <ul>
+                                        <li><strong>Контракт</strong> - обязательство реализовать методы</li>
+                                        <li><strong>"Может" (can-do)</strong> - Player <em>может</em> получать урон</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Интерфейсы в Unity",
+                                content: `
+                                    <h4>Пример использования:</h4>
+                                    <pre><code>public interface IInteractable {
+            void Interact();
+        }
+
+        public class Door : MonoBehaviour, IInteractable {
+            public void Interact() {
+                Debug.Log("Дверь открыта");
+            }
+        }
+
+        public class Chest : MonoBehaviour, IInteractable {
+            public void Interact() {
+                Debug.Log("Сундук открыт");
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 11: Компоненты в Unity",
+                        topics: [
+                            {
+                                title: "GameObject и компоненты",
+                                content: `
+                                    <h4>Основные концепции:</h4>
+                                    <ul>
+                                        <li><strong>GameObject</strong> - базовый объект сцены</li>
+                                        <li><strong>Компонент</strong> - добавляет функциональность (например: Transform, Rigidbody)</li>
+                                    </ul>
+                                    
+                                    <h4>Пример кода:</h4>
+                                    <pre><code>public class PlayerController : MonoBehaviour {
+            private Rigidbody rb;
+            
+            void Start() {
+                rb = GetComponent&lt;Rigidbody&gt;();
+            }
+            
+            void Update() {
+                float move = Input.GetAxis("Horizontal");
+                rb.velocity = new Vector3(move * 5f, rb.velocity.y, 0);
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Работа с Transform",
+                                content: `
+                                    <h4>Основные методы:</h4>
+                                    <pre><code>// Перемещение
+        transform.position = new Vector3(1f, 2f, 3f);
+
+        // Вращение
+        transform.Rotate(0, 90f, 0);
+
+        // Масштабирование
+        transform.localScale = Vector3.one * 2f;</code></pre>
+                                    
+                                    <h4>Практический пример:</h4>
+                                    <pre><code>public class Rotator : MonoBehaviour {
+            public float speed = 30f;
+            
+            void Update() {
+                transform.Rotate(0, speed * Time.deltaTime, 0);
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 12: Физика в Unity",
+                        topics: [
+                            {
+                                title: "Rigidbody и коллайдеры",
+                                content: `
+                                    <h4>Настройка физики:</h4>
+                                    <pre><code>public class Ball : MonoBehaviour {
+            private Rigidbody rb;
+            
+            void Start() {
+                rb = GetComponent&lt;Rigidbody&gt;();
+                rb.AddForce(Vector3.up * 500f);
+            }
+        }</code></pre>
+                                    
+                                    <h4>Типы коллайдеров:</h4>
+                                    <ul>
+                                        <li><strong>Box Collider</strong> - прямоугольник</li>
+                                        <li><strong>Sphere Collider</strong> - сфера</li>
+                                        <li><strong>Capsule Collider</strong> - капсула (для персонажей)</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Обработка столкновений",
+                                content: `
+                                    <h4>Методы коллизий:</h4>
+                                    <pre><code>void OnCollisionEnter(Collision collision) {
+            if (collision.gameObject.CompareTag("Enemy")) {
+                TakeDamage(10);
+            }
+        }
+
+        void OnTriggerEnter(Collider other) {
+            if (other.CompareTag("Coin")) {
+                AddCoin();
+                Destroy(other.gameObject);
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 13: Ввод данных",
+                        topics: [
+                            {
+                                title: "Input System",
+                                content: `
+                                    <h4>Базовый ввод:</h4>
+                                    <pre><code>void Update() {
+            float moveX = Input.GetAxis("Horizontal");
+            float moveY = Input.GetAxis("Vertical");
+            
+            transform.Translate(new Vector3(moveX, 0, moveY) * speed * Time.deltaTime);
+        }</code></pre>
+                                    
+                                    <h4>Обработка клавиш:</h4>
+                                    <pre><code>if (Input.GetKeyDown(KeyCode.Space)) {
+            Jump();
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            Shoot();
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Mobile Input (касания)",
+                                content: `
+                                    <h4>Обработка тапов:</h4>
+                                    <pre><code>void Update() {
+            if (Input.touchCount > 0) {
+                Touch touch = Input.GetTouch(0);
+                
+                if (touch.phase == TouchPhase.Began) {
+                    Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+                    Instantiate(effectPrefab, touchPos, Quaternion.identity);
+                }
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 14: Практика - Платформер",
+                        isPractice: true,
+                        task: `
+                            <h3>Создайте простой 2D-платформер:</h3>
+                            <ol>
+                                <li>Персонаж с Rigidbody2D и коллайдером</li>
+                                <li>Управление через Input (A/D или стрелки)</li>
+                                <li>Прыжок по пробелу (проверка на земле через Raycast)</li>
+                                <li>Собираемые монетки с триггер-коллайдерами</li>
+                            </ol>
+                            
+                            <div class="solution" style="display:none">
+                                <h4>Подсказки:</h4>
+                                <pre><code>public class PlayerController : MonoBehaviour {
+            public float speed = 5f;
+            public float jumpForce = 7f;
+            private Rigidbody2D rb;
+            private bool isGrounded;
+            
+            void Start() {
+                rb = GetComponent&lt;Rigidbody2D&gt;();
+            }
+            
+            void Update() {
+                float moveX = Input.GetAxis("Horizontal");
+                rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
+                
+                if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
+                    rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                }
+            }
+            
+            void OnCollisionEnter2D(Collision2D collision) {
+                if (collision.gameObject.CompareTag("Ground")) {
+                    isGrounded = true;
+                }
+            }
+        }</code></pre>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "Неделя 3: Unity 2D и игровые системы",
+                days: [
+                    {
+                        title: "День 14: 2D-графика и спрайты",
+                        topics: [
+                            {
+                                title: "Импорт спрайтов",
+                                content: `
+                                    <h4>Настройки импорта:</h4>
+                                    <ul>
+                                        <li>Режим <strong>Sprite (2D and UI)</strong></li>
+                                        <li>Pixels Per Unit (PPU): <code>16-64</code> для пиксель-арта</li>
+                                        <li>Фильтрация: <code>Point (no filter)</code></li>
+                                    </ul>
+                                    
+                                    <h4>Пример настройки:</h4>
+                                    <pre><code>// Автоматическая нарезка спрайтшита
+        void Start() {
+            Sprite[] sprites = Resources.LoadAll&lt;Sprite&gt;("Sprites/character_sheet");
+            GetComponent&lt;SpriteRenderer&gt;().sprite = sprites[0];
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Sprite Renderer",
+                                content: `
+                                    <h4>Основные свойства:</h4>
+                                    <pre><code>SpriteRenderer renderer = GetComponent&lt;SpriteRenderer&gt;();
+        renderer.sprite = newSprite;
+        renderer.color = Color.red;
+        renderer.flipX = true; // Зеркальное отражение</code></pre>
+                                    
+                                    <h4>Сортировка слоёв:</h4>
+                                    <ul>
+                                        <li><strong>Sorting Layer</strong> - управление порядком отрисовки</li>
+                                        <li><strong>Order in Layer</strong> - приоритет внутри слоя</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 15: 2D-физика",
+                        topics: [
+                            {
+                                title: "Rigidbody2D",
+                                content: `
+                                    <h4>Настройки компонента:</h4>
+                                    <pre><code>Rigidbody2D rb = GetComponent&lt;Rigidbody2D&gt;();
+        rb.gravityScale = 3f;
+        rb.mass = 0.5f;
+        rb.collisionDetection = CollisionDetection2D.Continuous;</code></pre>
+                                    
+                                    <h4>Типы тела:</h4>
+                                    <ul>
+                                        <li><strong>Dynamic</strong> - полная физика (игроки, предметы)</li>
+                                        <li><strong>Kinematic</strong> - управляется кодом (платформы)</li>
+                                        <li><strong>Static</strong> - неподвижные объекты (стены)</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Collider2D",
+                                content: `
+                                    <h4>Типы коллайдеров:</h4>
+                                    <ul>
+                                        <li><strong>BoxCollider2D</strong> - прямоугольник</li>
+                                        <li><strong>CircleCollider2D</strong> - круг</li>
+                                        <li><strong>CapsuleCollider2D</strong> - капсула</li>
+                                        <li><strong>PolygonCollider2D</strong> - произвольная форма</li>
+                                    </ul>
+                                    
+                                    <h4>Пример использования:</h4>
+                                    <pre><code>void OnCollisionEnter2D(Collision2D collision) {
+            if (collision.gameObject.CompareTag("Enemy")) {
+                TakeDamage(10);
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 16: Анимации в Unity",
+                        topics: [
+                            {
+                                title: "Animation Controller",
+                                content: `
+                                    <h4>Создание анимаций:</h4>
+                                    <ol>
+                                        <li>Создайте <strong>Animator Controller</strong></li>
+                                        <li>Настройте параметры (bool, float, trigger)</li>
+                                        <li>Создайте состояния (Idle, Run, Jump)</li>
+                                        <li>Настройте переходы между состояниями</li>
+                                    </ol>
+                                    
+                                    <h4>Пример кода:</h4>
+                                    <pre><code>Animator animator = GetComponent&lt;Animator&gt;();
+
+        void Update() {
+            float move = Input.GetAxis("Horizontal");
+            animator.SetFloat("Speed", Mathf.Abs(move));
+            
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                animator.SetTrigger("Jump");
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Sprite Sheet Animation",
+                                content: `
+                                    <h4>Скрипт для анимации:</h4>
+                                    <pre><code>public class SpriteAnimator : MonoBehaviour {
+            public Sprite[] frames;
+            public float frameRate = 10f;
+            
+            private SpriteRenderer renderer;
+            private float timer;
+            private int currentFrame;
+            
+            void Start() {
+                renderer = GetComponent&lt;SpriteRenderer&gt;();
+            }
+            
+            void Update() {
+                timer += Time.deltaTime;
+                if (timer >= 1f / frameRate) {
+                    currentFrame = (currentFrame + 1) % frames.Length;
+                    renderer.sprite = frames[currentFrame];
+                    timer = 0;
+                }
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 17: UI в Unity",
+                        topics: [
+                            {
+                                title: "Canvas и компоненты",
+                                content: `
+                                    <h4>Основные элементы UI:</h4>
+                                    <ul>
+                                        <li><strong>Canvas</strong> - контейнер для UI элементов</li>
+                                        <li><strong>Text (TMP)</strong> - текстовые поля</li>
+                                        <li><strong>Image</strong> - отображение спрайтов</li>
+                                        <li><strong>Button</strong> - интерактивные кнопки</li>
+                                        <li><strong>Slider</strong> - ползунки</li>
+                                    </ul>
+                                    
+                                    <h4>Пример кнопки:</h4>
+                                    <pre><code>public Button startButton;
+        void Start() {
+            startButton.onClick.AddListener(() => {
+                Debug.Log("Игра начата!");
+            });
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Event System",
+                                content: `
+                                    <h4>Обработка событий:</h4>
+                                    <pre><code>public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+            public void OnPointerEnter(PointerEventData eventData) {
+                ShowTooltip();
+            }
+            
+            public void OnPointerExit(PointerEventData eventData) {
+                HideTooltip();
+            }
+        }</code></pre>
+                                    
+                                    <h4>Термины:</h4>
+                                    <ul>
+                                        <li><strong>Raycast Target</strong> - определяет, может ли элемент получать события</li>
+                                        <li><strong>Anchor</strong> - привязка к краям экрана</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 18: Particle System",
+                        topics: [
+                            {
+                                title: "Создание эффектов",
+                                content: `
+                                    <h4>Основные параметры:</h4>
+                                    <ul>
+                                        <li><strong>Duration</strong> - длительность системы</li>
+                                        <li><strong>Start Speed/Lifetime</strong> - движение частиц</li>
+                                        <li><strong>Shape</strong> - форма эмиттера</li>
+                                        <li><strong>Color over Lifetime</strong> - изменение цвета</li>
+                                        <li><strong>Texture Sheet Animation</strong> - анимация спрайтов</li>
+                                    </ul>
+                                    
+                                    <h4>Пример кода:</h4>
+                                    <pre><code>public ParticleSystem explosionEffect;
+
+        void OnDestroy() {
+            ParticleSystem effect = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            effect.Play();
+            Destroy(effect.gameObject, effect.main.duration);
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Оптимизация частиц",
+                                content: `
+                                    <h4>Советы по производительности:</h4>
+                                    <ol>
+                                        <li>Используйте <strong>Bursts</strong> вместо постоянного эмиттинга</li>
+                                        <li>Ограничивайте <strong>Max Particles</strong></li>
+                                        <li>Применяйте <strong>LOD Groups</strong> для сложных эффектов</li>
+                                        <li>Кэшируйте системы через <strong>Object Pooling</strong></li>
+                                    </ol>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 19: Звук в Unity",
+                        topics: [
+                            {
+                                title: "AudioSource",
+                                content: `
+                                    <h4>Настройка звука:</h4>
+                                    <pre><code>public AudioClip jumpSound;
+        private AudioSource audioSource;
+
+        void Start() {
+            audioSource = GetComponent&lt;AudioSource&gt;();
+        }
+
+        void Jump() {
+            audioSource.PlayOneShot(jumpSound);
+        }</code></pre>
+                                    
+                                    <h4>Важные параметры:</h4>
+                                    <ul>
+                                        <li><strong>Play On Awake</strong> - автоматическое воспроизведение</li>
+                                        <li><strong>Loop</strong> - зацикливание</li>
+                                        <li><strong>Spatial Blend</strong> - 2D/3D звук</li>
+                                        <li><strong>Pitch</strong> - высота тона</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Audio Mixer",
+                                content: `
+                                    <h4>Создание микшера:</h4>
+                                    <ol>
+                                        <li>Создайте <strong>Audio Mixer</strong></li>
+                                        <li>Добавьте группы (Music, SFX, Voice)</li>
+                                        <li>Настройте параметры (Volume, Pitch, Effects)</li>
+                                        <li>Скриптовое управление:</li>
+                                    </ol>
+                                    
+                                    <pre><code>public AudioMixer mixer;
+        void SetVolume(float volume) {
+            mixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 20: Сохранение данных",
+                        topics: [
+                            {
+                                title: "PlayerPrefs",
+                                content: `
+                                    <h4>Базовые методы:</h4>
+                                    <pre><code>// Запись
+        PlayerPrefs.SetInt("HighScore", 1000);
+        PlayerPrefs.SetString("PlayerName", "Артур");
+        PlayerPrefs.Save();
+
+        // Чтение
+        int score = PlayerPrefs.GetInt("HighScore", 0);
+        string name = PlayerPrefs.GetString("PlayerName", "Игрок");</code></pre>
+                                    
+                                    <h4>Ограничения:</h4>
+                                    <ul>
+                                        <li>Только простые типы (int, float, string)</li>
+                                        <li>Не подходит для сложных структур данных</li>
+                                        <li>Данные хранятся в незашифрованном виде</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "JSON сериализация",
+                                content: `
+                                    <h4>Сохранение объектов:</h4>
+                                    <pre><code>[System.Serializable]
+        public class SaveData {
+            public int level;
+            public float health;
+            public string[] inventory;
+        }
+
+        public void SaveGame() {
+            SaveData data = new SaveData();
+            data.level = currentLevel;
+            // ... заполнение данных
+            
+            string json = JsonUtility.ToJson(data);
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/save.json", json);
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 21: Практика - 2D платформер",
+                        isPractice: true,
+                        task: `
+                            <h3>Создайте полноценный 2D-платформер:</h3>
+                            <ol>
+                                <li>Персонаж с анимациями (Idle, Run, Jump)</li>
+                                <li>Платформы с разными типами коллайдеров</li>
+                                <li>Система сбора монет с UI-счетчиком</li>
+                                <li>Эффекты частиц при сборе предметов</li>
+                                <li>Сохранение рекорда между сессиями</li>
+                            </ol>
+                            
+                            <div class="solution" style="display:none">
+                                <h4>Подсказки:</h4>
+                                <pre><code>public class GameManager : MonoBehaviour {
+            public static GameManager Instance;
+            public int coins;
+            
+            void Awake() {
+                if (Instance == null) {
+                    Instance = this;
+                    DontDestroyOnLoad(gameObject);
+                    LoadGame();
+                } else {
+                    Destroy(gameObject);
+                }
+            }
+            
+            public void AddCoin() {
+                coins++;
+                PlayerPrefs.SetInt("Coins", coins);
+            }
+            
+            void LoadGame() {
+                coins = PlayerPrefs.GetInt("Coins", 0);
+            }
+        }</code></pre>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "Неделя 4: Продвинутый Unity и 3D",
+                days: [
+                    {
+                        title: "День 21: 3D-графика и материалы",
+                        topics: [
+                            {
+                                title: "Импорт 3D-моделей",
+                                content: `
+                                    <h4>Поддерживаемые форматы:</h4>
+                                    <ul>
+                                        <li><strong>.fbx</strong> - лучшая совместимость</li>
+                                        <li><strong>.obj</strong> - простые модели</li>
+                                        <li><strong>.blend</strong> - напрямую из Blender</li>
+                                    </ul>
+
+                                    <h4>Настройки импорта:</h4>
+                                    <pre><code>Model Importer → Rig → Animation Type:
+        - None (для статичных объектов)
+        - Humanoid (персонажи)
+        - Generic (прочие анимированные модели)</code></pre>
+                                `
+                            },
+                            {
+                                title: "Материалы и шейдеры",
+                                content: `
+                                    <h4>Создание материала:</h4>
+                                    <pre><code>Material mat = new Material(Shader.Find("Standard"));
+        mat.color = Color.blue;
+        mat.SetFloat("_Metallic", 0.5f);
+        mat.SetTexture("_MainTex", texture);</code></pre>
+
+                                    <h4>Типы шейдеров:</h4>
+                                    <ul>
+                                        <li><strong>Standard</strong> - PBR-материалы</li>
+                                        <li><strong>Unlit</strong> - без освещения</li>
+                                        <li><strong>URP/Lit</strong> - для Universal Render Pipeline</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 22: Освещение и тени",
+                        topics: [
+                            {
+                                title: "Типы источников света",
+                                content: `
+                                    <h4>Основные компоненты:</h4>
+                                    <ul>
+                                        <li><strong>Directional Light</strong> - солнце</li>
+                                        <li><strong>Point Light</strong> - лампочка</li>
+                                        <li><strong>Spot Light</strong> - прожектор</li>
+                                        <li><strong>Area Light</strong> - светящаяся поверхность (только baked)</li>
+                                    </ul>
+
+                                    <h4>Настройка в коде:</h4>
+                                    <pre><code>Light light = GetComponent&lt;Light&gt;();
+        light.type = LightType.Spot;
+        light.spotAngle = 45f;
+        light.intensity = 2.5f;
+        light.shadows = LightShadows.Soft;</code></pre>
+                                `
+                            },
+                            {
+                                title: "Lightmapping (Baked Lighting)",
+                                content: `
+                                    <h4>Процесс запекания:</h4>
+                                    <ol>
+                                        <li>Откройте окно <strong>Lighting</strong> (Window → Rendering → Lighting)</li>
+                                        <li>Настройте параметры вкладки <strong>Lightmaps</strong></li>
+                                        <li>Нажмите <strong>Generate Lighting</strong></li>
+                                    </ol>
+
+                                    <h4>Термины:</h4>
+                                    <ul>
+                                        <li><strong>GI (Global Illumination)</strong> - глобальное освещение</li>
+                                        <li><strong>Lightmap</strong> - текстура с запеченным светом</li>
+                                        <li><strong>Light Probe</strong> - пробы для динамических объектов</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 23: Камеры и эффекты",
+                        topics: [
+                            {
+                                title: "Настройка камер",
+                                content: `
+                                    <h4>Основные параметры:</h4>
+                                    <pre><code>Camera cam = GetComponent&lt;Camera&gt;();
+        cam.fieldOfView = 60f;
+        cam.nearClipPlane = 0.1f;
+        cam.farClipPlane = 1000f;
+        cam.orthographic = false; // Перспективная проекция</code></pre>
+
+                                    <h4>Режимы рендеринга:</h4>
+                                    <ul>
+                                        <li><strong>Forward Rendering</strong> - стандартный</li>
+                                        <li><strong>Deferred Shading</strong> - много источников света</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Post-Processing",
+                                content: `
+                                    <h4>Эффекты:</h4>
+                                    <ul>
+                                        <li><strong>Bloom</strong> - свечение ярких объектов</li>
+                                        <li><strong>SSAO</strong> - Ambient Occlusion</li>
+                                        <li><strong>Color Grading</strong> - коррекция цвета</li>
+                                        <li><strong>Depth of Field</strong> - размытие фона</li>
+                                    </ul>
+
+                                    <h4>Настройка:</h4>
+                                    <pre><code>using UnityEngine.Rendering.PostProcessing;
+
+        void Start() {
+            PostProcessVolume volume = gameObject.AddComponent&lt;PostProcessVolume&gt;();
+            volume.profile = Resources.Load&lt;PostProcessProfile&gt;("Effects/MyProfile");
+            volume.isGlobal = true;
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 24: Анимация 3D-персонажей",
+                        topics: [
+                            {
+                                title: "Animator Controller",
+                                content: `
+                                    <h4>Создание state machine:</h4>
+                                    <ol>
+                                        <li>Создайте состояния (Idle, Walk, Run, Jump)</li>
+                                        <li>Настройте переходы с условиями</li>
+                                        <li>Добавьте параметры (float, bool, trigger)</li>
+                                    </ol>
+
+                                    <h4>Код для управления:</h4>
+                                    <pre><code>Animator anim = GetComponent&lt;Animator&gt;();
+
+        void Update() {
+            float move = Input.GetAxis("Vertical");
+            anim.SetFloat("Speed", move);
+
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                anim.SetTrigger("Jump");
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Blend Trees",
+                                content: `
+                                    <h4>Для плавных переходов:</h4>
+                                    <pre><code>// 1D Blend Tree для скорости
+        anim.SetFloat("Blend", speed);
+
+        // 2D Blend Tree для движения в разных направлениях
+        anim.SetFloat("X", horizontal);
+        anim.SetFloat("Y", vertical);</code></pre>
+
+                                    <h4>Настройка в редакторе:</h4>
+                                    <ol>
+                                        <li>Создайте Blend Tree</li>
+                                        <li>Добавьте анимации с пороговыми значениями</li>
+                                        <li>Настройте кривые смешивания</li>
+                                    </ol>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 25: Скриптованные события",
+                        topics: [
+                            {
+                                title: "Unity Events",
+                                content: `
+                                    <h4>Использование в инспекторе:</h4>
+                                    <pre><code>using UnityEngine.Events;
+
+        public class EventExample : MonoBehaviour {
+            public UnityEvent onPlayerEnter;
+
+            void OnTriggerEnter(Collider other) {
+                if (other.CompareTag("Player")) {
+                    onPlayerEnter.Invoke();
+                }
+            }
+        }</code></pre>
+
+                                    <h4>Динамическая подписка:</h4>
+                                    <pre><code>void Start() {
+            onPlayerEnter.AddListener(() => {
+                Debug.Log("Игрок вошел в триггер!");
+            });
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Coroutines",
+                                content: `
+                                    <h4>Для временных задержек:</h4>
+                                    <pre><code>IEnumerator ShowMessage() {
+            messageUI.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            messageUI.SetActive(false);
+        }
+
+        // Запуск:
+        StartCoroutine(ShowMessage());</code></pre>
+
+                                    <h4>Плавные изменения:</h4>
+                                    <pre><code>IEnumerator FadeOut() {
+            float alpha = 1f;
+            while (alpha > 0) {
+                alpha -= Time.deltaTime;
+                material.color = new Color(1, 1, 1, alpha);
+                yield return null;
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 26: Оптимизация",
+                        topics: [
+                            {
+                                title: "Object Pooling",
+                                content: `
+                                    <h4>Реализация пула:</h4>
+                                    <pre><code>public class ObjectPool : MonoBehaviour {
+            public GameObject prefab;
+            public int poolSize = 10;
+            private Queue&lt;GameObject&gt; pool = new Queue&lt;GameObject&gt;();
+
+            void Start() {
+                for (int i = 0; i < poolSize; i++) {
+                    GameObject obj = Instantiate(prefab);
+                    obj.SetActive(false);
+                    pool.Enqueue(obj);
+                }
+            }
+
+            public GameObject GetObject() {
+                if (pool.Count > 0) {
+                    GameObject obj = pool.Dequeue();
+                    obj.SetActive(true);
+                    return obj;
+                }
+                return Instantiate(prefab);
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Профилирование",
+                                content: `
+                                    <h4>Инструменты:</h4>
+                                    <ul>
+                                        <li><strong>Profiler</strong> (Window → Analysis → Profiler)</li>
+                                        <li><strong>Frame Debugger</strong></li>
+                                        <li><strong>Memory Profiler</strong></li>
+                                    </ul>
+
+                                    <h4>Оптимизация рендеринга:</h4>
+                                    <ul>
+                                        <li>Используйте <strong>GPU Instancing</strong></li>
+                                        <li>Настройте <strong>LOD Groups</strong></li>
+                                        <li>Применяйте <strong>Occlusion Culling</strong></li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 27: ScriptableObjects",
+                        topics: [
+                            {
+                                title: "Создание данных",
+                                content: `
+                                    <h4>Базовый пример:</h4>
+                                    <pre><code>[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+        public class Item : ScriptableObject {
+            public string itemName;
+            public Sprite icon;
+            public int price;
+        }
+
+        // Использование:
+        public Item healthPotion; // Перетащите SO в инспектор</code></pre>
+                                `
+                            },
+                            {
+                                title: "Хранение настроек",
+                                content: `
+                                    <h4>Game Settings:</h4>
+                                    <pre><code>[CreateAssetMenu(menuName = "Settings/GameSettings")]
+        public class GameSettings : ScriptableObject {
+            public float mouseSensitivity = 1f;
+            public float soundVolume = 0.8f;
+            public bool showTutorial = true;
+        }
+
+        // Доступ из кода:
+        GameSettings settings = Resources.Load&lt;GameSettings&gt;("GameSettings");
+        float sens = settings.mouseSensitivity;</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 28: Практика - 3D шутер",
+                        isPractice: true,
+                        task: `
+                            <h3>Создайте прототип 3D-шутера:</h3>
+                            <ol>
+                                <li>Персонаж с управлением от первого лица</li>
+                                <li>Система оружия с разными типами (пистолет, автомат)</li>
+                                <li>Противники с простым ИИ (патрулирование, атака)</li>
+                                <li>ScriptableObject для настройки оружия</li>
+                                <li>Object Pooling для пуль</li>
+                            </ol>
+
+                            <div class="solution" style="display:none">
+                                <h4>Подсказки:</h4>
+                                <pre><code>[CreateAssetMenu(menuName = "Weapons/Gun")]
+        public class GunData : ScriptableObject {
+            public string gunName;
+            public int damage;
+            public float fireRate;
+            public GameObject bulletPrefab;
+        }
+
+        public class Weapon : MonoBehaviour {
+            public GunData data;
+            private float nextFireTime;
+
+            void Update() {
+                if (Input.GetButton("Fire1") && Time.time >= nextFireTime) {
+                    nextFireTime = Time.time + 1f/data.fireRate;
+                    Shoot();
+                }
+            }
+
+            void Shoot() {
+                GameObject bullet = ObjectPool.Instance.GetObject();
+                bullet.transform.position = firePoint.position;
+                bullet.GetComponent&lt;Bullet&gt;().Init(data.damage);
+            }
+        }</code></pre>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "Неделя 5: Продвинутые игровые системы",
+                days: [
+                    {
+                        title: "День 28: Искусственный интеллект (ИИ)",
+                        topics: [
+                            {
+                                title: "Finite State Machine (FSM)",
+                                content: `
+                                    <h4>Реализация FSM:</h4>
+                                    <pre><code>public enum AIState { Patrol, Chase, Attack }
+        public AIState currentState;
+
+        void Update() {
+            switch(currentState) {
+                case AIState.Patrol:
+                    PatrolBehavior();
+                    break;
+                case AIState.Chase:
+                    ChaseBehavior();
+                    break;
+                case AIState.Attack:
+                    AttackBehavior();
+                    break;
+            }
+        }</code></pre>
+
+                                    <h4>Термины:</h4>
+                                    <ul>
+                                        <li><strong>Состояние (State)</strong> - текущий режим работы ИИ</li>
+                                        <li><strong>Переход (Transition)</strong> - условия смены состояний</li>
+                                        <li><strong>Blackboard</strong> - общая память для данных ИИ</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "NavMesh и Pathfinding",
+                                content: `
+                                    <h4>Настройка навигации:</h4>
+                                    <ol>
+                                        <li>Выделите статичные объекты → Navigation Static</li>
+                                        <li>Откройте Window → AI → Navigation</li>
+                                        <li>Запеките (Bake) NavMesh</li>
+                                    </ol>
+
+                                    <h4>Пример кода:</h4>
+                                    <pre><code>public NavMeshAgent agent;
+
+        void ChasePlayer() {
+            agent.SetDestination(player.position);
+            agent.speed = chaseSpeed;
+            agent.stoppingDistance = attackRange;
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 29: Поведенческие деревья",
+                        topics: [
+                            {
+                                title: "Использование Behavior Designer",
+                                content: `
+                                    <h4>Основные ноды:</h4>
+                                    <ul>
+                                        <li><strong>Sequence</strong> - выполнение по порядку</li>
+                                        <li><strong>Selector</strong> - выполнение до первого успеха</li>
+                                        <li><strong>Parallel</strong> - параллельное выполнение</li>
+                                        <li><strong>Conditional</strong> - проверка условий</li>
+                                        <li><strong>Action</strong> - выполнение действий</li>
+                                    </ul>
+
+                                    <h4>Пример дерева для NPC:</h4>
+                                    <pre>Selector
+        ├─ Sequence (Атака)
+        │  ├─ Условие: Игрок в радиусе атаки
+        │  └─ Действие: Атаковать
+        ├─ Sequence (Преследование)
+        │  ├─ Условие: Видит игрока
+        │  └─ Действие: Преледовать
+        └─ Действие: Патрулировать</pre>
+                                `
+                            },
+                            {
+                                title: "Реализация своими руками",
+                                content: `
+                                    <h4>Базовый класс ноды:</h4>
+                                    <pre><code>public abstract class BTNode {
+            public abstract bool Execute();
+        }
+
+        public class ConditionNode : BTNode {
+            public Func&lt;bool&gt; condition;
+            public override bool Execute() => condition();
+        }</code></pre>
+
+                                    <h4>Пример составного узла:</h4>
+                                    <pre><code>public class SequenceNode : BTNode {
+            private List&lt;BTNode&gt; children;
+            public override bool Execute() {
+                foreach(var node in children) {
+                    if (!node.Execute()) return false;
+                }
+                return true;
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 30: Сетевая игра (Photon PUN)",
+                        topics: [
+                            {
+                                title: "Настройка Photon",
+                                content: `
+                                    <h4>Базовые шаги:</h4>
+                                    <ol>
+                                        <li>Скачайте Photon Unity Networking (PUN)</li>
+                                        <li>Получите App ID в <a href="https://dashboard.photonengine.com" target="_blank">Photon Dashboard</a></li>
+                                        <li>Настройте PhotonServerSettings</li>
+                                    </ol>
+
+                                    <h4>Подключение к комнате:</h4>
+                                    <pre><code>using Photon.Pun;
+
+        void Start() {
+            PhotonNetwork.ConnectUsingSettings();
+        }
+
+        public override void OnConnectedToMaster() {
+            PhotonNetwork.JoinOrCreateRoom("Room1", new RoomOptions(), TypedLobby.Default);
+        }
+
+        public override void OnJoinedRoom() {
+            PhotonNetwork.Instantiate("PlayerPrefab", spawnPoint.position, Quaternion.identity);
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Синхронизация переменных",
+                                content: `
+                                    <h4>Синхронизированные свойства:</h4>
+                                    <pre><code>public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
+            [SerializeField] private float health;
+            
+            public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+                if (stream.IsWriting) {
+                    stream.SendNext(health);
+                } else {
+                    health = (float)stream.ReceiveNext();
+                }
+            }
+        }</code></pre>
+
+                                    <h4>RPC-вызовы:</h4>
+                                    <pre><code>[PunRPC]
+        void TakeDamage(int damage) {
+            health -= damage;
+            if (health <= 0) photonView.RPC("Die", RpcTarget.All);
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 31: Продвинутые эффекты",
+                        topics: [
+                            {
+                                title: "Shader Graph",
+                                content: `
+                                    <h4>Создание шейдера:</h4>
+                                    <ol>
+                                        <li>Create → Shader Graph → URP</li>
+                                        <li>Добавьте ноды (Texture Sample, Multiply, Lerp)</li>
+                                        <li>Настройте параметры (Normal, Emission, Metallic)</li>
+                                    </ol>
+
+                                    <h4>Пример эффекта свечения:</h4>
+                                    <pre><code>// В Shader Graph:
+        1. Sample Texture (Main Texture)
+        2. Multiply на Color (Emission Color)
+        3. Добавьте параметр Glow Intensity (Slider)
+        4. Подключите к Emission выхода Master Node</code></pre>
+                                `
+                            },
+                            {
+                                title: "Visual Effect Graph",
+                                content: `
+                                    <h4>Настройка VFX:</h4>
+                                    <ul>
+                                        <li>Create → Visual Effects → Visual Effect Graph</li>
+                                        <li>Добавьте блоки (Spawn, Update, Output)</li>
+                                        <li>Настройте параметры частиц (Size over Lifetime, Color over Lifetime)</li>
+                                    </ul>
+
+                                    <h4>Пример кода для активации:</h4>
+                                    <pre><code>public VisualEffect vfx;
+
+        void OnTriggerEnter(Collider other) {
+            vfx.Play();
+            vfx.SetVector3("SpawnPosition", transform.position);
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 32: Адресабельные ассеты",
+                        topics: [
+                            {
+                                title: "Addressables System",
+                                content: `
+                                    <h4>Настройка:</h4>
+                                    <ol>
+                                        <li>Window → Asset Management → Addressables → Groups</li>
+                                        <li>Поместите ассеты в группы</li>
+                                        <li>Установите метки (Labels)</li>
+                                    </ol>
+
+                                    <h4>Загрузка ассетов:</h4>
+                                    <pre><code>using UnityEngine.AddressableAssets;
+
+        // Асинхронная загрузка
+        async void LoadAsset() {
+            GameObject prefab = await Addressables.LoadAssetAsync&lt;GameObject&gt;("Enemies/Orc").Task;
+            Instantiate(prefab);
+        }
+
+        // Освобождение
+        void ReleaseAsset(GameObject obj) {
+            Addressables.Release(obj);
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Управление зависимостями",
+                                content: `
+                                    <h4>Загрузка сцен:</h4>
+                                    <pre><code>// Загрузка сцены
+        await Addressables.LoadSceneAsync("Level2").Task;
+
+        // Выгрузка
+        Addressables.UnloadSceneAsync(sceneInstance);</code></pre>
+
+                                    <h4>Групповая загрузка:</h4>
+                                    <pre><code>// По метке
+        var loadOp = Addressables.LoadAssetsAsync&lt;GameObject&gt;("enemies", null);
+        await loadOp.Task;
+
+        // Все объекты
+        foreach(var obj in loadOp.Result) {
+            Instantiate(obj);
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 33: DOTS и ECS",
+                        topics: [
+                            {
+                                title: "Entity Component System",
+                                content: `
+                                    <h4>Основные концепции:</h4>
+                                    <ul>
+                                        <li><strong>Entity</strong> - уникальный идентификатор</li>
+                                        <li><strong>Component</strong> - чистые данные (без логики)</li>
+                                        <li><strong>System</strong> - логика обработки компонентов</li>
+                                    </ul>
+
+                                    <h4>Пример компонента:</h4>
+                                    <pre><code>public struct Health : IComponentData {
+            public float Value;
+            public float MaxValue;
+        }
+
+        public struct Damage : IComponentData {
+            public float Value;
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Система обработки",
+                                content: `
+                                    <h4>Job System:</h4>
+                                    <pre><code>[BurstCompile]
+        public struct DamageSystem : IJobEntity {
+            public float DeltaTime;
+
+            void Execute(ref Health health, in Damage damage) {
+                health.Value -= damage.Value * DeltaTime;
+            }
+        }
+
+        // Запуск системы:
+        var job = new DamageSystem { DeltaTime = Time.deltaTime };
+        job.Schedule();</code></pre>
+
+                                    <h4>Преимущества:</h4>
+                                    <ul>
+                                        <li>Многопоточность через Burst Compiler</li>
+                                        <li>Оптимизация кеша процессора</li>
+                                        <li>Идеально для тысяч объектов</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 34: Пользовательские редакторы",
+                        topics: [
+                            {
+                                title: "Custom Inspectors",
+                                content: `
+                                    <h4>Создание кастомного инспектора:</h4>
+                                    <pre><code>[CustomEditor(typeof(Weapon))]
+        public class WeaponEditor : Editor {
+            public override void OnInspectorGUI() {
+                Weapon weapon = (Weapon)target;
+                
+                EditorGUILayout.LabelField("Current Ammo", weapon.CurrentAmmo.ToString());
+                weapon.Damage = EditorGUILayout.IntSlider("Damage", weapon.Damage, 1, 100);
+                
+                if (GUILayout.Button("Reload")) {
+                    weapon.Reload();
+                }
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Editor Window",
+                                content: `
+                                    <h4>Создание окна:</h4>
+                                    <pre><code>public class LevelEditorWindow : EditorWindow {
+            [MenuItem("Tools/Level Editor")]
+            public static void ShowWindow() {
+                GetWindow&lt;LevelEditorWindow&gt;("Level Editor");
+            }
+
+            void OnGUI() {
+                if (GUILayout.Button("Generate Platform")) {
+                    GameObject platform = new GameObject("Platform");
+                    platform.AddComponent&lt;BoxCollider&gt;();
+                }
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 35: Практика - Сетевой кооператив",
+                        isPractice: true,
+                        task: `
+                            <h3>Создайте кооперативную игру на Photon:</h3>
+                            <ol>
+                                <li>2-4 игрока в комнате</li>
+                                <li>Общая цель (например, защита базы)</li>
+                                <li>Синхронизированный инвентарь</li>
+                                <li>Голосовой чат через Photon Voice</li>
+                                <li>Система рейтинга (победа/поражение)</li>
+                            </ol>
+
+                            <div class="solution" style="display:none">
+                                <h4>Подсказки:</h4>
+                                <pre><code>// Синхронизация инвентаря
+        public class NetworkInventory : MonoBehaviourPun {
+            [PunRPC]
+            void AddItemRPC(int itemId) {
+                Item item = ItemDatabase.GetItem(itemId);
+                inventory.Add(item);
+                if (photonView.IsMine) UpdateUI();
+            }
+
+            public void AddItem(Item item) {
+                photonView.RPC("AddItemRPC", RpcTarget.All, item.id);
+            }
+        }
+
+        // Голосовой чат
+        public class VoiceChat : MonoBehaviour {
+            void Start() {
+                PhotonVoiceNetwork.Client.GlobalAudioVolume = 0.8f;
+            }
+        }</code></pre>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "Неделя 6: Продвинутые техники разработки",
+                days: [
+                    {
+                        title: "День 35: Custom Render Pipeline",
+                        topics: [
+                            {
+                                title: "URP (Universal Render Pipeline)",
+                                content: `
+                                    <h4>Настройка URP:</h4>
+                                    <ol>
+                                        <li>Create → Rendering → URP Asset (with UniversalRenderer)</li>
+                                        <li>Настройте Quality Settings</li>
+                                        <li>Добавьте Renderer Features (Outline, Blur и т.д.)</li>
+                                    </ol>
+
+                                    <h4>Пример пост-эффекта:</h4>
+                                    <pre><code>using UnityEngine.Rendering.Universal;
+
+        public class CustomRenderPass : ScriptableRenderPass {
+            public override void Execute(ScriptableRenderContext context, ref RenderingData data) {
+                CommandBuffer cmd = CommandBufferPool.Get("Custom Effect");
+                // Логика рендеринга...
+                context.ExecuteCommandBuffer(cmd);
+                CommandBufferPool.Release(cmd);
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "ShaderLab и HLSL",
+                                content: `
+                                    <h4>Структура шейдера:</h4>
+                                    <pre><code>Shader "Custom/Toon" {
+            Properties {
+                _MainTex ("Texture", 2D) = "white" {}
+                _Ramp ("Ramp Texture", 2D) = "white" {}
+            }
+            SubShader {
+                Pass {
+                    CGPROGRAM
+                    #pragma vertex vert
+                    #pragma fragment frag
+                    // HLSL код...
+                    ENDCG
+                }
+            }
+        }</code></pre>
+
+                                    <h4>Пример Toon-шейдера:</h4>
+                                    <pre><code>fixed4 frag (v2f i) : SV_Target {
+            fixed3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+            float diff = max(0, dot(i.normal, lightDir));
+            diff = tex2D(_Ramp, float2(diff, 0)).r;
+            
+            fixed4 col = tex2D(_MainTex, i.uv);
+            col.rgb *= _LightColor0.rgb * diff;
+            return col;
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 36: Compute Shaders",
+                        topics: [
+                            {
+                                title: "Основы Compute Shaders",
+                                content: `
+                                    <h4>Структура .compute файла:</h4>
+                                    <pre><code>#pragma kernel CSMain
+
+        RWTexture2D&lt;float4&gt; Result;
+        Texture2D&lt;float4&gt; InputTexture;
+
+        [numthreads(8,8,1)]
+        void CSMain (uint3 id : SV_DispatchThreadID) {
+            Result[id.xy] = float4(InputTexture[id.xy].rgb * 2.0, 1.0);
+        }</code></pre>
+
+                                    <h4>Вызов из C#:</h4>
+                                    <pre><code>ComputeShader shader;
+        RenderTexture result;
+
+        void ProcessImage() {
+            int kernel = shader.FindKernel("CSMain");
+            shader.SetTexture(kernel, "Result", result);
+            shader.SetTexture(kernel, "InputTexture", sourceTexture);
+            shader.Dispatch(kernel, result.width/8, result.height/8, 1);
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "GPU Instancing",
+                                content: `
+                                    <h4>Настройка материала:</h4>
+                                    <pre><code>MaterialPropertyBlock props = new MaterialPropertyBlock();
+        props.SetColor("_Color", Random.ColorHSV());
+        meshRenderer.SetPropertyBlock(props);</code></pre>
+
+                                    <h4>Шейдер с инстансингом:</h4>
+                                    <pre><code>UNITY_INSTANCING_BUFFER_START(Props)
+            UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
+        UNITY_INSTANCING_BUFFER_END(Props)
+
+        void frag() {
+            fixed4 c = tex2D(_MainTex, i.uv) * UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
+            // ...
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 37: Процедурная генерация",
+                        topics: [
+                            {
+                                title: "Генерация мешей",
+                                content: `
+                                    <h4>Создание меша в коде:</h4>
+                                    <pre><code>Mesh mesh = new Mesh();
+        Vector3[] vertices = new Vector3[4];
+        int[] triangles = new int[6];
+
+        // Настройка вершин и треугольников...
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+
+        GetComponent&lt;MeshFilter&gt;().mesh = mesh;</code></pre>
+
+                                    <h4>Пример планетоида:</h4>
+                                    <pre><code>IEnumerator GeneratePlanet() {
+            Mesh mesh = new Mesh();
+            List&lt;Vector3&gt; verts = new List&lt;Vector3&gt;();
+            List&lt;int&gt; tris = new List&lt;int&gt;();
+            
+            // Генерация икосаэдра...
+            for (int i = 0; i < subdivisions; i++) {
+                Subdivide(verts, tris);
+                yield return null; // Пошаговая генерация
+            }
+            
+            mesh.SetVertices(verts);
+            mesh.SetTriangles(tris, 0);
+            GetComponent&lt;MeshFilter&gt;().mesh = mesh;
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Шум Перлина и генерация ландшафтов",
+                                content: `
+                                    <h4>Генерация высот:</h4>
+                                    <pre><code>float[,] GenerateHeightMap(int size, float scale, int octaves, float persistence) {
+            float[,] map = new float[size, size];
+            for (int y = 0; y < size; y++) {
+                for (int x = 0; x < size; x++) {
+                    float amplitude = 1;
+                    float frequency = 1;
+                    float noiseHeight = 0;
+                    
+                    for (int i = 0; i < octaves; i++) {
+                        float sampleX = x / scale * frequency;
+                        float sampleY = y / scale * frequency;
+                        
+                        float perlin = Mathf.PerlinNoise(sampleX, sampleY) * 2 - 1;
+                        noiseHeight += perlin * amplitude;
+                        
+                        amplitude *= persistence;
+                        frequency *= 2;
+                    }
+                    
+                    map[x, y] = noiseHeight;
+                }
+            }
+            return map;
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 38: Оптимизация памяти",
+                        topics: [
+                            {
+                                title: "Профайлинг памяти",
+                                content: `
+                                    <h4>Инструменты:</h4>
+                                    <ul>
+                                        <li>Memory Profiler (Window → Analysis → Memory Profiler)</li>
+                                        <li>Unity Profiler (Memory Area)</li>
+                                        <li>Heap Explorer (Asset Store)</li>
+                                    </ul>
+
+                                    <h4>Анализ дампа памяти:</h4>
+                                    <pre><code>using UnityEditor.MemoryProfiler;
+
+        void CaptureMemory() {
+            var snapshot = MemoryProfiler.TakeSnapshot();
+            // Анализ snapshot.PackedNativeUnityEngineObjects
+            // и snapshot.managedHeapSections
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Оптимизация ресурсов",
+                                content: `
+                                    <h4>Стратегии:</h4>
+                                    <ul>
+                                        <li><strong>Texture Streaming</strong> - динамическая загрузка текстур</li>
+                                        <li><strong>Asset Bundles</strong> - разбиение на пакеты</li>
+                                        <li><strong>GC.Collect</strong> - ручное управление сборщиком мусора</li>
+                                        <li><strong>Structs вместо классов</strong> - для временных данных</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 39: Продвинутый C#",
+                        topics: [
+                            {
+                                title: "Рефлексия и атрибуты",
+                                content: `
+                                    <h4>Пример кастомного атрибута:</h4>
+                                    <pre><code>[AttributeUsage(AttributeTargets.Field)]
+        public class RangeWithStep : PropertyAttribute {
+            public float min;
+            public float max;
+            public float step;
+            
+            public RangeWithStep(float min, float max, float step) {
+                this.min = min;
+                this.max = max;
+                this.step = step;
+            }
+        }
+
+        // Использование:
+        [RangeWithStep(0, 10, 0.5)]
+        public float moveSpeed;</code></pre>
+
+                                    <h4>Доступ через рефлексию:</h4>
+                                    <pre><code>FieldInfo[] fields = typeof(MyClass).GetFields(
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
+        );
+
+        foreach (var field in fields) {
+            RangeWithStep attr = field.GetCustomAttribute&lt;RangeWithStep&gt;();
+            if (attr != null) {
+                Debug.Log($"Field {field.Name} has range {attr.min}-{attr.max}");
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Source Generators",
+                                content: `
+                                    <h4>Пример генератора кода:</h4>
+                                    <pre><code>[Generator]
+        public class MyGenerator : ISourceGenerator {
+            public void Execute(GeneratorExecutionContext context) {
+                string source = @"
+        namespace Generated {
+            public class HelloWorld {
+                public static void SayHello() {
+                    System.Console.WriteLine(""Hello from generated code!"");
+                }
+            }
+        }";
+                context.AddSource("helloWorld.cs", source);
+            }
+        }</code></pre>
+
+                                    <h4>Применение:</h4>
+                                    <ul>
+                                        <li>Автоматическая регистрация компонентов</li>
+                                        <li>Генерация повторяющегося кода</li>
+                                        <li>Оптимизация доступа к данным</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 40: Продвинутые архитектурные паттерны",
+                        topics: [
+                            {
+                                title: "Entity-Component-System (ECS)",
+                                content: `
+                                    <h4>Полная реализация:</h4>
+                                    <pre><code>// Система
+        public class MovementSystem : SystemBase {
+            protected override void OnUpdate() {
+                Entities
+                    .ForEach((ref Translation trans, in MoveSpeed speed) => {
+                        trans.Value += speed.Value * Time.DeltaTime;
+                    })
+                    .ScheduleParallel();
+            }
+        }
+
+        // Компонент
+        public struct MoveSpeed : IComponentData {
+            public float Value;
+        }
+
+        // Создание сущности
+        EntityManager.CreateEntity(
+            typeof(Translation),
+            typeof(Rotation),
+            typeof(MoveSpeed)
+        );</code></pre>
+                                `
+                            },
+                            {
+                                title: "Event Bus",
+                                content: `
+                                    <h4>Реализация шины событий:</h4>
+                                    <pre><code>public static class EventBus {
+            private static Dictionary&lt;Type, List&lt;Delegate&gt;&gt; handlers = new();
+
+            public static void Subscribe&lt;T&gt;(Action&lt;T&gt; handler) {
+                if (!handlers.ContainsKey(typeof(T))) {
+                    handlers[typeof(T)] = new List&lt;Delegate&gt;();
+                }
+                handlers[typeof(T)].Add(handler);
+            }
+
+            public static void Publish&lt;T&gt;(T event) {
+                if (handlers.TryGetValue(typeof(T), out var list)) {
+                    foreach (Delegate handler in list) {
+                        ((Action&lt;T&gt;)handler)(event);
+                    }
+                }
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 41: CI/CD для игр",
+                        topics: [
+                            {
+                                title: "Автоматическая сборка",
+                                content: `
+                                    <h4>Пример Jenkinsfile:</h4>
+                                    <pre><code>pipeline {
+            agent any
+            stages {
+                stage('Build') {
+                    steps {
+                        bat 'Unity.exe -batchmode -quit -projectPath . -executeMethod BuildScript.BuildWindows'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        bat 'Unity.exe -batchmode -quit -projectPath . -runTests -testPlatform playmode'
+                    }
+                }
+                stage('Deploy') {
+                    steps {
+                        archiveArtifacts 'Builds/**/*.exe'
+                    }
+                }
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Юнит-тесты",
+                                content: `
+                                    <h4>Пример теста:</h4>
+                                    <pre><code>[TestFixture]
+        public class PlayerTests {
+            [Test]
+            public void TakeDamage_ReducesHealth() {
+                // Arrange
+                var player = new GameObject().AddComponent&lt;Player&gt;();
+                player.health = 100;
+                
+                // Act
+                player.TakeDamage(20);
+                
+                // Assert
+                Assert.AreEqual(80, player.health);
+            }
+        }</code></pre>
+
+                                    <h4>Тестирование Editor-скриптов:</h4>
+                                    <pre><code>[UnityTest]
+        public IEnumerator EnemySpawnTest() {
+            var spawner = new GameObject().AddComponent&lt;EnemySpawner&gt;();
+            spawner.SpawnEnemy();
+            yield return null; // Ждём кадр
+            
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            Assert.AreEqual(1, enemies.Length);
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 42: Финальный проект",
+                        isPractice: true,
+                        task: `
+                            <h3>Создайте продвинутый игровой прототип:</h3>
+                            <ol>
+                                <li>Процедурная генерация мира (ландшафт + структуры)</li>
+                                <li>Кастомный рендер пайплайн с уникальными эффектами</li>
+                                <li>Оптимизированный ECS-код для симуляции тысяч объектов</li>
+                                <li>Система автоматической сборки и тестирования</li>
+                                <li>Профайлинг и оптимизация памяти</li>
+                            </ol>
+
+                            <div class="solution" style="display:none">
+                                <h4>Подсказки:</h4>
+                                <pre><code>// Пример гибридного подхода (ECS + GameObject)
+        public class HybridEntity : MonoBehaviour {
+            public Entity entity;
+            private World world;
+
+            void Start() {
+                world = World.DefaultGameObjectInjectionWorld;
+                entity = world.EntityManager.CreateEntity();
+                world.EntityManager.AddComponentObject(entity, this);
+            }
+        }
+
+        // Процедурная генерация с JobSystem
+        [BurstCompile]
+        struct GenerationJob : IJobParallelFor {
+            public NativeArray&lt;float&gt; heightMap;
+            
+            public void Execute(int index) {
+                int x = index % size;
+                int y = index / size;
+                heightMap[index] = GenerateHeight(x, y);
+            }
+        }</code></pre>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "Неделя 7: Коммерческая разработка и релиз",
+                days: [
+                    {
+                        title: "День 42: Аналитика и метрики",
+                        topics: [
+                            {
+                                title: "Unity Analytics",
+                                content: `
+                                    <h4>Настройка:</h4>
+                                    <ol>
+                                        <li>Window → Services → Analytics</li>
+                                        <li>Включите Analytics в Project Settings</li>
+                                        <li>Настройте Custom Events</li>
+                                    </ol>
+
+                                    <h4>Пример отправки событий:</h4>
+                                    <pre><code>using UnityEngine.Analytics;
+
+        // Отправка кастомного события
+        Analytics.CustomEvent("LevelCompleted", new Dictionary&lt;string, object&gt; {
+            {"level_index", currentLevel},
+            {"time_spent", Time.timeSinceLevelLoad},
+            {"attempts", attemptCount}
+        });
+
+        // Отправка транзакции
+        Analytics.Transaction("premium_currency", 9.99m, "USD");</code></pre>
+                                `
+                            },
+                            {
+                                title: "Heatmaps и A/B тестирование",
+                                content: `
+                                    <h4>Пример кода для heatmap:</h4>
+                                    <pre><code>void Update() {
+            Vector3 playerPos = player.transform.position;
+            Analytics.Event("PlayerPosition", new Dictionary&lt;string, object&gt; {
+                {"x", playerPos.x},
+                {"y", playerPos.y},
+                {"z", playerPos.z},
+                {"time", Time.time}
+            });
+        }</code></pre>
+
+                                    <h4>A/B тестирование:</h4>
+                                    <pre><code>// Включение разных вариантов
+        if (Analytics.GetUserVariation("UI_Layout") == 0) {
+            ShowLayoutA();
+        } else {
+            ShowLayoutB();
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 43: Монетизация",
+                        topics: [
+                            {
+                                title: "Unity IAP (In-App Purchases)",
+                                content: `
+                                    <h4>Настройка:</h4>
+                                    <ol>
+                                        <li>Window → Services → In-App Purchasing</li>
+                                        <li>Настройте продукты в Unity Dashboard</li>
+                                        <li>Инициализация:</li>
+                                    </ol>
+
+                                    <pre><code>using UnityEngine.Purchasing;
+
+        void Start() {
+            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+            builder.AddProduct("gold_coins", ProductType.Consumable);
+            UnityPurchasing.Initialize(this, builder);
+        }
+
+        public void OnPurchaseComplete(Product product) {
+            if (product.definition.id == "gold_coins") {
+                currency += 1000;
+                SaveGame();
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Реклама (Unity Ads)",
+                                content: `
+                                    <h4>Показ рекламы:</h4>
+                                    <pre><code>using UnityEngine.Advertisements;
+
+        void ShowRewardedAd() {
+            if (Advertisement.IsReady("rewardedVideo")) {
+                var options = new ShowOptions {
+                    resultCallback = HandleAdResult
+                };
+                Advertisement.Show("rewardedVideo", options);
+            }
+        }
+
+        void HandleAdResult(ShowResult result) {
+            if (result == ShowResult.Finished) {
+                GiveReward();
+            }
+        }</code></pre>
+
+                                    <h4>Настройка медиации:</h4>
+                                    <ul>
+                                        <li>Используйте Unity LevelPlay</li>
+                                        <li>Настройте waterfall из разных рекламных сетей</li>
+                                        <li>Оптимизируйте eCPM</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 44: Продвижение игры",
+                        topics: [
+                            {
+                                title: "ASO (App Store Optimization)",
+                                content: `
+                                    <h4>Ключевые элементы:</h4>
+                                    <ul>
+                                        <li><strong>Название:</strong> до 30 символов, с ключевыми словами</li>
+                                        <li><strong>Описание:</strong> первые 3 строки самые важные</li>
+                                        <li><strong>Ключевые слова:</strong> 100 символов, через запятую</li>
+                                        <li><strong>Иконка:</strong> узнаваемая и уникальная</li>
+                                    </ul>
+
+                                    <h4>Пример хорошего описания:</h4>
+                                    <pre>Epic Battle Simulator - новая стратегия 2023!
+        ★ 100+ уникальных юнитов
+        ★ Режим онлайн-мультиплеера
+        ★ Ежедневные награды
+        Скачай бесплатно и начни войну!</pre>
+                                `
+                            },
+                            {
+                                title: "Социальные сети и трафик",
+                                content: `
+                                    <h4>Стратегии продвижения:</h4>
+                                    <ul>
+                                        <li><strong>TikTok:</strong> короткие геймплейные ролики</li>
+                                        <li><strong>YouTube:</strong> летсплеи и обзоры</li>
+                                        <li><strong>Discord:</strong> сообщество фанатов</li>
+                                        <li><strong>CPI-сети:</strong> AppLovin, IronSource</li>
+                                    </ul>
+
+                                    <h4>Пример кода для шеринга:</h4>
+                                    <pre><code>public void ShareScreenshot() {
+            StartCoroutine(TakeScreenshotAndShare());
+        }
+
+        IEnumerator TakeScreenshotAndShare() {
+            yield return new WaitForEndOfFrame();
+            
+            Texture2D ss = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+            ss.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+            ss.Apply();
+
+            string filePath = Path.Combine(Application.temporaryCachePath, "shared_img.png");
+            File.WriteAllBytes(filePath, ss.EncodeToPNG());
+
+            new NativeShare()
+                .AddFile(filePath)
+                .SetText("Смотри мой результат в Epic Game!")
+                .Share();
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 45: Локализация",
+                        topics: [
+                            {
+                                title: "I2 Localization",
+                                content: `
+                                    <h4>Настройка:</h4>
+                                    <ol>
+                                        <li>Установите I2 Localization из Asset Store</li>
+                                        <li>Создайте термины в Language Source</li>
+                                        <li>Настройте компоненты:</li>
+                                    </ol>
+
+                                    <pre><code>// Динамическое изменение языка
+        I2.Loc.LocalizationManager.CurrentLanguage = "Russian";
+
+        // Получение перевода
+        string text = I2.Loc.LocalizationManager.GetTranslation("Game_Title");
+
+        // В редакторе:
+        [I2.Loc.TermsPopup("")]
+        public string termName;</code></pre>
+                                `
+                            },
+                            {
+                                title: "Автоматический перевод",
+                                content: `
+                                    <h4>Google Sheets API:</h4>
+                                    <pre><code>// Экспорт в CSV
+        using (var writer = new StreamWriter("localization.csv")) {
+            foreach (var term in terms) {
+                writer.WriteLine($"{term.Key},en,es,ru,zh");
+                writer.WriteLine($"{term.Value},,,,");
+            }
+        }
+
+        // Импорт обратно в Unity
+        I2.Loc.LocalizationManager.Import_CSV(File.ReadAllText("localization.csv"));</code></pre>
+
+                                    <h4>Советы:</h4>
+                                    <ul>
+                                        <li>Используйте placeholders: {0}, {1}</li>
+                                        <li>Избегайте строковых конкатенаций</li>
+                                        <li>Тестируйте RTL-языки (арабский, иврит)</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 46: Публикация",
+                        topics: [
+                            {
+                                title: "Google Play Console",
+                                content: `
+                                    <h4>Ключевые шаги:</h4>
+                                    <ol>
+                                        <li>Создайте подписанный APK/AAB</li>
+                                        <li>Заполните Store Listing</li>
+                                        <li>Настройте Pricing & Distribution</li>
+                                        <li>Отправьте на проверку</li>
+                                    </ol>
+
+                                    <h4>Автоматизация:</h4>
+                                    <pre><code>// Gradle build script
+        android {
+            signingConfigs {
+                release {
+                    storeFile file("keystore.jks")
+                    storePassword System.getenv("STORE_PASS")
+                    keyAlias System.getenv("KEY_ALIAS")
+                    keyPassword System.getenv("KEY_PASS")
+                }
+            }
+            buildTypes {
+                release {
+                    signingConfig signingConfigs.release
+                }
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Steam Direct",
+                                content: `
+                                    <h4>Требования:</h4>
+                                    <ul>
+                                        <li>Подготовьте 1000$ депозит (возвращаемый)</li>
+                                        <li>Соберите билд под Windows</li>
+                                        <li>Подготовьте материалы:
+                                            <ul>
+                                                <li>Капсула (460x215, 600x900)</li>
+                                                <li>Скриншоты (1280x720)</li>
+                                                <li>Трейлер (до 2 минут)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <h4>Пример Steamworks API:</h4>
+                                    <pre><code>using Steamworks;
+
+        void Start() {
+            if (SteamManager.Initialized) {
+                string userName = SteamFriends.GetPersonaName();
+                int appId = SteamUtils.GetAppID();
+                SteamUserStats.RequestCurrentStats();
+            }
+        }
+
+        public void UnlockAchievement(string id) {
+            SteamUserStats.SetAchievement(id);
+            SteamUserStats.StoreStats();
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 47: Поддержка после релиза",
+                        topics: [
+                            {
+                                title: "Система обновлений",
+                                content: `
+                                    <h4>Автообновление через Addressables:</h4>
+                                    <pre><code>using UnityEngine.AddressableAssets;
+
+        async void CheckForUpdates() {
+            var handle = Addressables.CheckForCatalogUpdates();
+            await handle.Task;
+            
+            if (handle.Result.Count > 0) {
+                Debug.Log("Доступно обновление!");
+                var updateHandle = Addressables.UpdateCatalogs();
+                await updateHandle.Task;
+                
+                // Загрузка новых ассетов
+                var downloadSize = await Addressables.GetDownloadSizeAsync("new_content").Task;
+                if (downloadSize > 0) {
+                    var downloadHandle = Addressables.DownloadDependenciesAsync("new_content");
+                    await downloadHandle.Task;
+                }
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Обратная связь с игроками",
+                                content: `
+                                    <h4>Встроенная система репортов:</h4>
+                                    <pre><code>public class FeedbackSystem : MonoBehaviour {
+            public void SendReport(string type, string message) {
+                StartCoroutine(UploadReport(type, message));
+            }
+
+            IEnumerator UploadReport(string type, string message) {
+                WWWForm form = new WWWForm();
+                form.AddField("user_id", SystemInfo.deviceUniqueIdentifier);
+                form.AddField("type", type);
+                form.AddField("message", message);
+                form.AddField("platform", Application.platform.ToString());
+                
+                using (UnityWebRequest www = UnityWebRequest.Post("https://api.yourgame.com/reports", form)) {
+                    yield return www.SendWebRequest();
+                    if (www.result != UnityWebRequest.Result.Success) {
+                        Debug.LogError(www.error);
+                    }
+                }
+            }
+        }</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 48: Юридические аспекты",
+                        topics: [
+                            {
+                                title: "GDPR и CCPA",
+                                content: `
+                                    <h4>Реализация согласия:</h4>
+                                    <pre><code>public class GDPRConsent : MonoBehaviour {
+            public GameObject consentPanel;
+
+            void Start() {
+                if (!PlayerPrefs.HasKey("GDPR_Consent")) {
+                    consentPanel.SetActive(true);
+                }
+            }
+
+            public void AcceptConsent() {
+                PlayerPrefs.SetInt("GDPR_Consent", 1);
+                Analytics.EnableTracking();
+                Advertisement.SetConsent(true);
+            }
+
+            public void DeclineConsent() {
+                PlayerPrefs.SetInt("GDPR_Consent", 0);
+                Analytics.DisableTracking();
+                Advertisement.SetConsent(false);
+            }
+        }</code></pre>
+                                `
+                            },
+                            {
+                                title: "Возрастные рейтинги",
+                                content: `
+                                    <h4>Системы рейтингов:</h4>
+                                    <ul>
+                                        <li><strong>ESRB</strong> (США/Канада)</li>
+                                        <li><strong>PEGI</strong> (Европа)</li>
+                                        <li><strong>GRAC</strong> (Корея)</li>
+                                        <li><strong>CERO</strong> (Япония)</li>
+                                    </ul>
+
+                                    <h4>Пример анкеты IARC:</h4>
+                                    <pre><code>// В Unity:
+        // Для Unity WebGL
+Application.ExternalEval(`
+    window.open(
+        "https://www.globalratings.com/iarcquestionnaire.aspx",
+        "_blank"
+    )
+`);
+        `);</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 49: Подготовка к релизу",
+                        isPractice: true,
+                        task: `
+                            <h3>Полный чеклист перед релизом:</h3>
+                            <ol>
+                                <li><strong>Техническая проверка:</strong>
+                                    <ul>
+                                        <li>Тесты на 10+ устройствах</li>
+                                        <li>Проверка потребления памяти</li>
+                                        <li>Анализ FPS и нагрева</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Маркетинг:</strong>
+                                    <ul>
+                                        <li>Press-kit (лого, скриншоты, трейлер)</li>
+                                        <li>Страница в магазине (описание, ключевые слова)</li>
+                                        <li>План продвижения (соцсети, реклама)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Юридические аспекты:</strong>
+                                    <ul>
+                                        <li>Политика конфиденциальности</li>
+                                        <li>Возрастной рейтинг</li>
+                                        <li>GDPR/CCPA согласие</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Монетизация:</strong>
+                                    <ul>
+                                        <li>Настройка IAP и рекламы</li>
+                                        <li>Аналитика (Unity Analytics, Firebase)</li>
+                                        <li>Система скидок и акций</li>
+                                    </ul>
+                                </li>
+                            </ol>
+
+                            <div class="solution" style="display:none">
+                                <h4>Пример чеклиста:</h4>
+                                <pre><code>### Технический чеклист:
+        - [ ] Нет критических багов (краши, зависания)
+        - [ ] Оптимизация под минимальные требования
+        - [ ] Автообновление через Addressables
+        - [ ] Резервное копирование данных игрока
+
+        ### Маркетинговый чеклист:
+        - [ ] Трейлер (30 сек + 2 мин версии)
+        - [ ] 5+ скриншотов (1280x720)
+        - [ ] Описание с ключевыми словами
+        - [ ] Страница в соцсетях</code></pre>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "Неделя 8: Профессиональное развитие",
+                days: [
+                    {
+                        title: "День 49: Создание портфолио",
+                        topics: [
+                            {
+                                title: "Оптимальная структура портфолио",
+                                content: `
+                                    <h4>Основные разделы:</h4>
+                                    <ol>
+                                        <li><strong>Главная страница</strong>:
+                                            <ul>
+                                                <li>Краткая информация о вас (1-2 предложения)</li>
+                                                <li>Лучшие 3 проекта с превью</li>
+                                                <li>Контактная информация</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Детали проектов</strong>:
+                                            <ul>
+                                                <li>Скриншоты/гифки</li>
+                                                <li>Ваша роль в проекте</li>
+                                                <li>Использованные технологии</li>
+                                                <li>Ссылки на билды/исходники</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                `
+                            },
+                            {
+                                title: "Платформы для размещения",
+                                content: `
+                                    <h4>Лучшие варианты:</h4>
+                                    <ul>
+                                        <li><strong>Персональный сайт</strong> (Webflow, WordPress):
+                                            <pre><code>// Пример структуры на GitHub Pages
+        ├── index.html      # Главная
+        ├── projects/       # Страницы проектов
+        ├── assets/         # Изображения и билды
+        └── contact.html    # Контакты</code></pre>
+                                        </li>
+                                        <li><strong>Специализированные платформы</strong>:
+                                            <ul>
+                                                <li><a href="https://itch.io" target="_blank">itch.io</a> (для инди-разработчиков)</li>
+                                                <li><a href="https://www.artstation.com" target="_blank">ArtStation</a> (для художников/дизайнеров)</li>
+                                                <li><a href="https://github.com" target="_blank">GitHub</a> (для программистов)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 50: Резюме и сопроводительные письма",
+                        topics: [
+                            {
+                                title: "Оптимизация резюме для геймдева",
+                                content: `
+                                    <h4>Ключевые разделы:</h4>
+                                    <pre><code># Иван Петров
+        ## Unity Developer
+
+        ### Навыки
+        - Программирование: C# (5 лет), DOTS, ShaderLab
+        - Инструменты: Unity, Git, Jira
+        - Геймдизайн: баланс, механики, прототипирование
+
+        ### Опыт
+        **Lead Developer** | Studio X (2021-2023)
+        - Разработал систему ИИ для стратегии (50к установок)
+        - Оптимизировал рендеринг (FPS +40%)
+
+        ### Образование
+        МГУ, ФПМ, 2018-2022</code></pre>
+
+                                    <h4>Советы:</h4>
+                                    <ul>
+                                        <li>Используйте глаголы действия: "разработал", "оптимизировал", "реализовал"</li>
+                                        <li>Указывайте конкретные цифры и результаты</li>
+                                        <li>Добавьте ссылки на портфолио</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Шаблон сопроводительного письма",
+                                content: `
+                                    <h4>Структура письма:</h4>
+                                    <pre><code>Уважаемая [Имя],
+
+        Я заинтересовался вакансией [Название] в [Компания], так как [конкретная причина]. 
+        Мой опыт в [ключевой навык] идеально соответствует требованиям.
+
+        В проекте [Название проекта] я:
+        - Реализовал [функция], что повысило [метрика] на X%
+        - Оптимизировал [система], сократив [ресурс] на Y%
+
+        Приложил резюме и ссылки на портфолио:
+        - [Ссылка на itch.io]
+        - [Ссылка на GitHub]
+
+        Готов обсудить детали. Спасибо за внимание!
+
+        С уважением,
+        [Ваше имя]
+        [Контакты]</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 51: Подготовка к собеседованию",
+                        topics: [
+                            {
+                                title: "Технические вопросы по Unity",
+                                content: `
+                                    <h4>Типичные вопросы:</h4>
+                                    <ol>
+                                        <li><strong>Оптимизация</strong>:
+                                            <pre><code>// Как оптимизировать сцену с 10к объектов?
+        1. Использовать DOTS для симуляции
+        2. Применить GPU Instancing
+        3. Реализовать LOD и Occlusion Culling</code></pre>
+                                        </li>
+                                        <li><strong>Архитектура</strong>:
+                                            <pre><code>// Как организовать систему диалогов?
+        - ScriptableObject для данных
+        - Finite State Machine для ветвления
+        - Event System для триггеров</code></pre>
+                                        </li>
+                                        <li><strong>3D математика</strong>:
+                                            <pre><code>// Как повернуть объект к цели?
+        transform.rotation = Quaternion.LookRotation(
+            target.position - transform.position
+        );</code></pre>
+                                        </li>
+                                    </ol>
+                                `
+                            },
+                            {
+                                title: "Тестовые задания",
+                                content: `
+                                    <h4>Пример задания:</h4>
+                                    <pre><code>Задача: 
+        Создать прототип 2D-платформера за 72 часа с:
+        - Персонажем (движение, прыжки)
+        - 2 типами врагов с разным ИИ
+        - Системой сохранения прогресса
+
+        Критерии оценки:
+        1. Чистота кода и архитектура
+        2. Оптимизация
+        3. Креативность в геймдизайне</code></pre>
+
+                                    <h4>Советы:</h4>
+                                    <ul>
+                                        <li>Комментируйте ключевые решения</li>
+                                        <li>Используйте version control (Git)</li>
+                                        <li>Добавьте README с инструкциями</li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 52: Фриланс vs Студия",
+                        topics: [
+                            {
+                                title: "Платформы для фриланса",
+                                content: `
+                                    <h4>Лучшие площадки:</h4>
+                                    <ul>
+                                        <li><strong>Upwork</strong>:
+                                            <pre><code>Профиль должен содержать:
+        - Специализацию (например: "Unity Mobile Developer")
+        - Рейтинг (начинайте с мелких заказов)
+        - Портфолио с билдами</code></pre>
+                                        </li>
+                                        <li><strong>Fiverr</strong>:
+                                            <pre><code>Пример услуги:
+        "Создам 2D-платформер на Unity за $500" 
+        Включает:
+        - 3 уровня
+        - Систему сохранений
+        - Адаптацию под мобильные устройства</code></pre>
+                                        </li>
+                                        <li><strong>Toptal</strong> (для опытных)</li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Работа в студии",
+                                content: `
+                                    <h4>Типы компаний:</h4>
+                                    <table class="studio-types">
+                                        <tr>
+                                            <th>Тип</th>
+                                            <th>Плюсы</th>
+                                            <th>Минусы</th>
+                                        </tr>
+                                        <tr>
+                                            <td>AAA-студии</td>
+                                            <td>Высокие бюджеты, престиж</td>
+                                            <td>Жесткие сроки, узкая специализация</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Мобильные студии</td>
+                                            <td>Быстрые релизы, data-driven</td>
+                                            <td>Шаблонные механики</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Инди-команды</td>
+                                            <td>Креативная свобода</td>
+                                            <td>Нестабильный доход</td>
+                                        </tr>
+                                    </table>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 53: Управление проектами",
+                        topics: [
+                            {
+                                title: "Методологии разработки",
+                                content: `
+                                    <h4>Scrum для игр:</h4>
+                                    <pre><code>// Типичный спринт (2 недели):
+        1. Планирование (Planning):
+           - Выбор задач из бэклога
+           - Оценка сложности (story points)
+
+        2. Ежедневные стендапы (15 мин):
+           - Что сделал вчера?
+           - Что сделаю сегодня?
+           - Какие препятствия?
+
+        3. Ретроспектива (Retro):
+           - Что прошло хорошо?
+           - Что можно улучшить?</code></pre>
+                                `
+                            },
+                            {
+                                title: "Инструменты",
+                                content: `
+                                    <h4>Основной стек:</h4>
+                                    <ul>
+                                        <li><strong>Trello/Jira</strong> - управление задачами</li>
+                                        <li><strong>Git/GitHub</strong> - контроль версий</li>
+                                        <li><strong>Slack/Discord</strong> - коммуникация</li>
+                                        <li><strong>Miro</strong> - геймдизайн-документы</li>
+                                    </ul>
+
+                                    <h4>Пример workflow в Git:</h4>
+                                    <pre><code># Создание ветки
+        git checkout -b feature/new-enemy-ai
+
+        # Коммиты
+        git add .
+        git commit -m "Добавил базовый FSM для врагов"
+
+        # Пушим в удаленный репозиторий
+        git push origin feature/new-enemy-ai
+
+        # Создаем Pull Request в GitHub
+        # После ревью - мерджим в develop</code></pre>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 54: Юридические аспекты",
+                        topics: [
+                            {
+                                title: "Авторские права",
+                                content: `
+                                    <h4>Защита проекта:</h4>
+                                    <ol>
+                                        <li><strong>Регистрация кода</strong>:
+                                            <pre><code>// Добавьте в каждый файл:
+        // Copyright (c) [Год] [Ваше имя/компания]
+        // Все права защищены</code></pre>
+                                        </li>
+                                        <li><strong>Лицензии на ассеты</strong>:
+                                            <ul>
+                                                <li>MIT - разрешает модификацию</li>
+                                                <li>CC-BY - требует указания автора</li>
+                                                <li>Проприетарная - запрещает использование</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                `
+                            },
+                            {
+                                title: "Договоры",
+                                content: `
+                                    <h4>Ключевые документы:</h4>
+                                    <ul>
+                                        <li><strong>NDA</strong> (Non-Disclosure Agreement):
+                                            <pre><code>// Запрещает разглашение информации
+        // Длительность: 2-5 лет
+        // Штрафные санкции за нарушение</code></pre>
+                                        </li>
+                                        <li><strong>Work for Hire</strong>:
+                                            <pre><code>// Все права переходят заказчику
+        // Фиксированная оплата
+        // Четкие сроки и требования</code></pre>
+                                        </li>
+                                    </ul>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 55: Продолжение обучения",
+                        topics: [
+                            {
+                                title: "Ресурсы для роста",
+                                content: `
+                                    <h4>Лучшие источники:</h4>
+                                    <ul>
+                                        <li><strong>Книги</strong>:
+                                            <ul>
+                                                <li>"Game Programming Patterns" - R. Nystrom</li>
+                                                <li>"Unity in Action" - J. Hocking</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Курсы</strong>:
+                                            <ul>
+                                                <li>Unity Learn Premium</li>
+                                                <li>Coursera: Game Design and Development</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Сообщества</strong>:
+                                            <ul>
+                                                <li>Unity Forum</li>
+                                                <li>Reddit: /r/gamedev</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                `
+                            },
+                            {
+                                title: "Конференции и ивенты",
+                                content: `
+                                    <h4>Ключевые мероприятия:</h4>
+                                    <table class="events-table">
+                                        <tr>
+                                            <th>Название</th>
+                                            <th>Фокус</th>
+                                            <th>Место</th>
+                                        </tr>
+                                        <tr>
+                                            <td>GDC</td>
+                                            <td>Технологии</td>
+                                            <td>Сан-Франциско</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Unite</td>
+                                            <td>Unity</td>
+                                            <td>Разные города</td>
+                                        </tr>
+                                        <tr>
+                                            <td>DevGAMM</td>
+                                            <td>Инди-разработка</td>
+                                            <td>Москва/Киев</td>
+                                        </tr>
+                                    </table>
+                                `
+                            }
+                        ]
+                    },
+                    {
+                        title: "День 56: Итоги и дальнейшие шаги",
+                        isPractice: true,
+                        task: `
+                            <h3>Финальный чеклист выпускника:</h3>
+                            <ol>
+                                <li><strong>Портфолио</strong> (3+ завершенных проекта)</li>
+                                <li><strong>Резюме</strong> (оптимизированное под геймдев)</li>
+                                <li><strong>LinkedIn профиль</strong> с навыками</li>
+                                <li><strong>Готовый тестовый проект</strong> (для собеседований)</li>
+                                <li><strong>План развития</strong> на 6 месяцев</li>
+                            </ol>
+
+                            <div class="solution" style="display:none">
+                                <h4>Пример плана развития:</h4>
+                                <pre><code>### 1-й месяц:
+        - [ ] Завершить курс Advanced Unity на Coursera
+        - [ ] Участвовать в Game Jam
+        - [ ] Оптимизировать 1 проект под мобильные устройства
+
+        ### 2-й месяц:
+        - [ ] Изучить Shader Graph на практике
+        - [ ] Разработать собственный плагин для Unity
+        - [ ] Подать 5 заявок на стажировки
+
+        ### 3-6 месяцы:
+        - [ ] Выпустить коммерческий проект
+        - [ ] Набрать 1000 установок
+        - [ ] Получить первые отзывы</code></pre>
+                            </div>
+                        `
+                    }
+                ]
+            }
+        ];
+
+        const practiceTasks = {
+            week1: [
+                "Консольный калькулятор",
+                "Генератор случайных чисел",
+                "Система диалогов с NPC",
+                "Инвентарь игрока"
+            ],
+            week2: [
+                "Система инвентаря с наследованием",
+                "Управление персонажем в 3D",
+                "Система диалогов с NPC",
+                "Прототип платформера"
+            ],
+            week3: [
+                "Персонаж с 4-направленной анимацией",
+                "Система диалогов с NPC",
+                "Инвентарь с drag-and-drop",
+                "Генератор случайных уровней"
+            ],
+            week4: [
+                "3D-персонаж с анимациями",
+                "Система инвентаря на ScriptableObjects",
+                "Генератор случайных уровней",
+                "Оптимизированный шутер с Object Pooling"
+            ],
+            week5: [
+                "ИИ для стратегии с Behavior Trees",
+                "Сетевой FPS с Photon",
+                "Оптимизированный симулятор толпы (DOTS)",
+                "Кастомный редактор для диалогов"
+            ],
+            week6: [
+                "Процедурная вселенная с Compute Shaders",
+                "Кастомный рендер пайплайн с пост-эффектами",
+                "Оптимизированная MMO-архитектура",
+                "Автоматизированная система тестирования"
+            ],
+            week7: [
+                "Настройка системы IAP с 3 типами товаров",
+                "Создание маркетингового пресс-кита",
+                "Реализация GDPR-совместимой системы аналитики",
+                "Подготовка полного релизного чеклиста"
+            ],
+            week8: [
+                "Создание персонального сайта-портфолио",
+                "Оптимизация LinkedIn профиля",
+                "Подготовка кейсов для собеседований",
+                "Разработка 6-месячного плана карьеры"
+            ]
+        };
+
+        // Render the curriculum
+        document.addEventListener('DOMContentLoaded', function() {
+            const weeksContainer = document.getElementById('weeksContainer');
+            
+            curriculum.forEach((week, weekIndex) => {
+                const weekCard = document.createElement('div');
+                weekCard.className = 'week-card';
+                weekCard.innerHTML = `<h2>${week.title}</h2>`;
+                
+                const weekDays = document.createElement('div');
+                weekDays.className = 'week-days';
+                
+                week.days.forEach((day, dayIndex) => {
+                    const dayCard = document.createElement('div');
+                    dayCard.className = day.isPractice ? 'day-card practice-day' : 'day-card';
+                    dayCard.innerHTML = `<h3>${day.title}</h3>`;
+                    
+                    if (day.isPractice) {
+                        const practiceDiv = document.createElement('div');
+                        practiceDiv.className = 'practice-task';
+                        practiceDiv.innerHTML = day.task;
+                        
+                        const showSolutionBtn = document.createElement('button');
+                        showSolutionBtn.textContent = 'Показать решение';
+                        showSolutionBtn.addEventListener('click', function() {
+                            const solution = practiceDiv.querySelector('.solution');
+                            if (solution.style.display === 'none') {
+                                solution.style.display = 'block';
+                                showSolutionBtn.textContent = 'Скрыть решение';
+                            } else {
+                                solution.style.display = 'none';
+                                showSolutionBtn.textContent = 'Показать решение';
+                            }
+                        });
+                        
+                        practiceDiv.appendChild(showSolutionBtn);
+                        dayCard.appendChild(practiceDiv);
+                    } else {
+                        day.topics.forEach(topic => {
+                            const topicDiv = document.createElement('div');
+                            topicDiv.className = 'topic-item';
+                            topicDiv.innerHTML = `<h4>${topic.title}</h4><div class="topic-content">${topic.content}</div>`;
+                            dayCard.appendChild(topicDiv);
+                        });
+                    }
+                    
+                    weekDays.appendChild(dayCard);
+                });
+                
+                weekCard.appendChild(weekDays);
+                weeksContainer.appendChild(weekCard);
+            });
+        });
+    </script>
+</body>
+</html>
